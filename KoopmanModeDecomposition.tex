@@ -1,0 +1,402 @@
+\documentclass[]{article}
+\usepackage{extsizes}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{amsfonts} 
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{stackengine}
+\usepackage{xcolor}
+\newtheorem{axiom}{Axiom}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newcommand{\innerproduct}[2]{\langle #1, #2 \rangle}
+
+
+%opening
+\title{Koopman Operator Theory}
+\author{}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+
+The main objective of building the field of Koopman Operator Theory is to obtain linear representations of non-linear dynamical systems.
+
+\section{Background on Dynamical Systems}
+\subsection{Dynamical Systems}
+\begin{definition}[\textbf{Dynamical system}]
+A \textbf{dynamical system} on a manifold $M$ is a $\mathcal{C}^1$-map 
+\begin{equation}
+	\phi: \mathbb{R} \times M \to M
+\end{equation}
+where $M \in \tau_{\mathbb{R}^n}$ and if $\phi_t(x)=\phi(t,x)$, then $\phi_t$ satisfies
+\begin{enumerate}
+	\item $\phi_0(x)=x$ for all $x \in M$ and 
+	\item $\phi_t \circ \phi_s (x) = \phi_{t+s}(x)$ for all $s,t \in \mathbb{R}$ and $x \in M$.
+\end{enumerate}
+\end{definition}
+We can easily see that for each $t \in \mathbb{R}$, $\phi_t$ is a $\mathcal{C}^1$-map of $M$ into $M$ which has a $\mathcal{C}^1$-inverse given by $\phi_{-t}$. Therefore, $\phi = \{\phi_t\}_{t \in \mathbb{R}}$ is a one-parameter family of diffeomorphism on $M$ that form a commutative group under composition. \\
+For example, if $A \in M^{n \times n}(\mathbb{R})$ then $\phi(t,x)=e^{At}x$ defines a dynamical system on $\mathbb{R}^n$ and for each $x_0 \in \mathbb{R}^n$, $\phi(t,x_0)$ is the solution of the initial value problem
+\begin{equation}
+	\begin{split}
+		\dot{x} & = Ax \\
+		x(0) & = x_0.
+	\end{split}
+\end{equation}
+In general, if $\phi(t,x)$ is a dynamical system on $M \subseteq \mathbb{R}^n$, then
+\begin{equation}
+	f(x)=\frac{d}{dt}\phi(t,x)\bigg|_{t=0}
+\end{equation}
+defines a $\mathcal{C}^1$-\textbf{vector field} on $M$ and for each $x_0 \in M$, $\phi(t,x_0)$ is the solution of the initial value problem
+\begin{equation}
+	\begin{split}
+		\frac{d}{dt} x(t) & = f(x) \\
+		x(0) & = x_0.
+	\end{split}
+\end{equation}
+\subsection{Dynamical systems via differential equations}
+As we've seen in section $1.1$, a dynamical system $\phi$ defines a vector field $\textbf{f}$ and $\phi(t,x_0)$ is the solution to a system of differential equation depending on $\textbf{f}$. Therefore, it makes sense to define dynamical systems in terms of the corresponding differential equations.
+\begin{definition}[\textbf{Continuous-time dynamical system}]
+A continuous-time dynamical system $\phi(t,x) : \mathbb{R} \times M \to M$ is the solution to a system of differential equations
+\begin{equation}
+	\begin{split}
+		\frac{d}{dt}\textbf{x}\,(t) & = \textbf{f}\,(\textbf{x},t;\beta) \\
+		\textbf{x}(0) & = \textbf{x}_0,
+	\end{split}
+\end{equation}
+where $\textbf{x}$ is the state of the dynamical system, $\textbf{f}$ defines a vector field on $M$, $t$ is the time index and $\beta$ is a set of parameters.
+\end{definition}
+It is possible to obtain the more general notion of a discrete-time dynamical system by discretizing the continuous time index set $\{t\}_{t \in \mathbb{R}}$ into a discrete time index set $\{k\Delta t\}_{k \in \mathbb{Z}}$, where $\Delta t$ is a fixed-length interval. \\
+Since by definition of derivative,
+\begin{equation}
+	\begin{split}
+		\dot{\textbf{x}} & = \lim_{\Delta t \to 0}\frac{\textbf{x}_{k+1}-\textbf{x}_k}{\Delta t} \\
+		\dot{\textbf{x}} & = \textbf{f}(\textbf{x},t;\beta)
+	\end{split}
+\end{equation}
+it follows that
+\begin{equation}
+	\textbf{x}_{k+1} = \textbf{x}_k + \int_{k \Delta t}^{(k+1)\Delta t} \textbf{f}(\textbf{x}(\tau)) d\tau = \cdots = x_0+\int_0^{(k+1)\Delta t} \textbf{f}(\textbf{x}(\tau)) d\tau.
+\end{equation}
+
+\begin{definition}[\textbf{Discrete-time dynamical system}]
+A \textbf{discrete-time dynamical system} is defined by the equation 
+\begin{equation}
+	\textbf{x}_{k+1} = F \textbf{x}_k,
+\end{equation}
+for which it holds,
+\begin{equation}
+	\textbf{x}_{k+1} = \textbf{x}_k + \int_{k \Delta t}^{(k+1)\Delta t} \textbf{f}(\textbf{x}(\tau)) d\tau.
+\end{equation}
+\end{definition}
+This defines a discrete-time propagator $\textbf{F}_{\Delta t}$ which gives rise to a flow map.
+\begin{definition}[\textbf{Flow map}]
+A \textbf{flow map} is a function $F_t$ which satisfies
+\begin{equation}
+	F_t(\textbf{x}(t_0)) = \textbf{x}(t_0) + \int_{t_0}^{t_0+t} \textbf{f}(\textbf{x}(\tau)) d\tau.
+\end{equation}
+\end{definition}
+The flow map describes the evolution of measurements of the dynamical system given its corresponding state and vector field.
+
+\subsection{Linear dynamics and spectral decomposition}
+Consider a linear system of differential equations of the form
+\begin{equation}
+	\dot{\textbf{x}}=A\textbf{x}	
+\end{equation}
+where $\textbf{x} \in \mathbb{R}^n$, $A \in M^{n \times n}(\mathbb{R})$ and
+\begin{equation}
+	\dot{\textbf{x}}=\frac{d\textbf{x}}{dt}=\begin{bmatrix}
+		\frac{dx_1}{dt} \\
+		\frac{dx_2}{dt} \\
+		\vdots \\
+		\frac{dx_n}{dt}
+	\end{bmatrix}
+\end{equation}
+It is well-known that equation $(11)$ has solution
+\begin{equation}
+	\textbf{x}(t_0+t)=e^{At}\textbf{x}(t_0).
+\end{equation}
+Before we delve into the spectral decomposition theory, we should define the notion of eigenvalue and eigenvector.
+\begin{definition}[\textbf{Eigenvector/Eigenvalue}]
+Let $\alpha: \mathbb{R}^n \to \mathbb{R}^n$ be a linear map with associated matrix $A$. Then, $x \neq 0$ is an \textbf{eigenvector} of $A$ if
+\begin{equation}
+	Ax=\lambda x,
+\end{equation}
+where $\lambda$ is the associated \textbf{eigenvalue}.
+\end{definition}
+The dynamics are completely determined by the eigenvalues and eigenvectors of $A$, given by the spectral decomposition $AT=T\Lambda$. But how can we find the eigenvectors and eigenvalues?
+\begin{definition}[\textbf{Characteristic equation}]
+The \textbf{characteristic polynomial} of a matrix $A \in M^{n \times n}(\mathbb{R})$ is given by
+\begin{equation}
+	p_A(\lambda)=\det(A-\lambda I).
+\end{equation}
+\end{definition}
+\begin{theorem}
+$\lambda$ is an eigenvalue of $A$ $\iff$ $p_A(\lambda)=\det(A-\lambda I)=0$.
+\end{theorem}
+Having found the eigenvalues $\{\lambda_1,\dots,\lambda_n\}$ of $A$, we can substitute each of these in the equation 
+\begin{equation}
+	(A-\lambda_i I)v_i=0
+\end{equation}
+to find the eigenvectors $v_i$ associated with each eigenvalue $\lambda_i$, for $i=1,\dots,n$.
+Having defined a process to compute eigenvectors and eigenvalues, we can start to delve into the spectral dcomposition of a given matrix $A \in M^{n \times n}(\mathbb{R})$. We are given that $AT=T\Lambda$. It follows that,
+\begin{equation}
+	AT=T\Lambda \iff A = T\Lambda T^{-1} \implies e^{At} = e^{T\Lambda T^{-1} t} 
+\end{equation}
+and therefore, we can rewrite $(12)$ as
+\begin{equation}
+	\textbf{x}(t_0+t) = Te^{At}T^{-1}\textbf{x}(t_0).
+\end{equation}
+The operator $T^{-1}$ induces a transformation $\textbf{z}=T^{-1}\textbf{x}$ into intrinsic eigenvector coordinates, in which we have decoupled dynamics, 
+\begin{equation}
+	\frac{d}{dt} \textbf{z} = \Lambda \textbf{z} \iff \frac{d}{dt} z_j=\lambda_j z_j, \,\, \forall j.
+\end{equation}
+
+\section{Koopman Operator Theory}
+Koopman Operator Theory is an approach for the data-driven study of dynamical systems in terms of measurements $\textbf{g}(\textbf{x})$ obtained from it. \\
+In $1931$, Koopman showed that it is possible to represent a non-linear dynamical system in terms of a linear but infinite-dimensional operator acting on a Hilbert space of state measurements. This operator is obviously called the \textbf{Koopman Operator}. \\
+Before trying to understand Koopamn Operator theory, let's study some important concepts.
+\begin{definition}[\textbf{Linear operator}]
+A \textbf{linear operator} is a mapping $\alpha:M \to \mathbb{R}$ which satisfies
+\begin{equation}
+	\alpha(\lambda x + \mu y) = \lambda \alpha(x) + \mu \alpha(y).
+\end{equation}
+\end{definition}
+
+\begin{definition}[\textbf{$\mathcal{L}^p$-space}]
+Let $(X,\mathcal{A}, \mu)$ be a measure space and $1 \leq p < \infty$. The space $\mathcal{L}^p(X)$ consists of equivalence classes of measurable functions $f:X \to \mathbb{R}$ such that
+\begin{equation}
+	\int_X |f|^p d \mu < \infty,
+\end{equation}
+where $2$ measurable functions are equivalente if they are equal $\mu$-a.e. The \textbf{$\mathcal{L}^p$-norm} is defined by
+\begin{equation}
+	||f||_p = \bigg(\int_X |f|^p d\mu\bigg)^{\frac{1}{p}}.
+\end{equation}
+\end{definition}
+If we consider $\mathbb{N}$ with the counting measure we have the sequence space $l^p(\mathbb{N})$.
+\begin{definition}[\textbf{$l^p$-space}]
+The \textbf{$l^p$-space} is given by the space of all sequences $\{x_n \in \mathbb{R}\}_{n \in \mathbb{R}}$, such that
+\begin{equation}
+	\sum_{n=1}^{\infty} |x_n|^p < \infty.
+\end{equation}
+The \textbf{$l^p$-norm} is defined by
+\begin{equation}
+	||x||_p = \bigg(\sum_{n=1}^{\infty} |x_n|^p\bigg)^{\frac{1}{p}}.
+\end{equation}
+\end{definition}
+\begin{definition}[\textbf{Cauchy sequence}]
+A \textbf{Cauchy sequence} is a sequence $\{x_n\}_{n \in \mathbb{N}}$ such that
+\begin{equation}
+	\forall \epsilon > 0, \exists N \in \mathbb{N} : m,n \geq N \implies d(x_n,x_m)<\epsilon.
+\end{equation}
+\end{definition}
+\begin{definition}
+A Hilbert space $H$ is a complete inner product space. The inner product $\langle \cdot, \cdot \rangle : H \times H \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ satisfies
+\begin{enumerate}
+	\item \textbf{Conjugate symmetry}: $\innerproduct{x}{y} = \overline{\innerproduct{y}{x}}$;
+	\item \textbf{Linearity in the first argument}: $\innerproduct{ax+by}{z} = a\innerproduct{x}{z} + b \innerproduct{y}{z}$;
+	\item \textbf{Positive-definiteness}: $\innerproduct{x}{x}>0$.
+\end{enumerate}
+A Hilbert space $H$ is complete in the sense that every Cauchy sequence in $H$ is convergent.
+\end{definition}
+\subsection{Mathematical formulation of Koopman Theory}
+Since Koopman Operator Theory is a data-driven method, we should start by defining the data and how we will use it.
+\begin{definition}[\textbf{Observable}]
+An \textbf{observable} is a measurement function $\textbf{g}:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ of an infinite-dimensional Hilbert space. The space of measurement functions is denoted by $\mathcal{G}(M)$.
+\end{definition}
+The Koopman Operator evolves the measurements of a dynamical system by means of the associated flow map.
+\begin{definition}[\textbf{Koopman Operator}]
+The \textbf{Koopman Operator} is an infinite-dimensional linear operator, denoted $\mathcal{K}_t$, that acts on observables in the following way
+\begin{equation}
+	\mathcal{K}_t \textbf{g}(\textbf{x}) = \textbf{g} \circ F_t (\textbf{x}).
+\end{equation}
+\end{definition}
+For a discrete-time dynamical system with timestep $\Delta t$, the Koopman propagator $\mathcal{K}_{\Delta t}$ is defined by
+\begin{equation}
+	\mathcal{K}_{\Delta t} \textbf{g}(\textbf{x}_k) = \textbf{g}(F_{\Delta t}(\textbf{x}_k)) = \textbf{g}(\textbf{x}_{k+1}),
+\end{equation}
+and therefore, it defines an infinite-dimensional dynamical system that advances discrete state measurement $\textbf{g}(x_k)$ for $k \in \mathbb{N}$. \\
+The continuous analogue of 
+\begin{equation}
+	\textbf{g}(\textbf{x}_{k+1}) = \mathcal{K}_{\Delta t} \textbf{g}(\textbf{x}_k), \,\, \text{$\color{red} \bigg(\sim \textbf{x}_{k+1} = F (\textbf{x}_k)\bigg)$}
+\end{equation}
+is given by the Lie operator $\mathcal{L}$, for which it holds
+\begin{equation}
+	\frac{d}{dt} \textbf{g} = \mathcal{L} \textbf{g} \,\, \text{$\color{red} \bigg(\sim \frac{d}{dt} \textbf{x}(t) = \textbf{f}(\textbf{x}(t)\bigg)$}.
+\end{equation}
+Therefore, $\mathcal{L}$ is the infinitesimal generator of the one-parameter family of transformations $\mathcal{K}_t$. By definition of derivative, $\mathcal{L}$ is therefore given as
+\begin{equation}
+	\mathcal{L}\textbf{g}=\lim_{t \to 0} \frac{\mathcal{K}_t\textbf{g}-\textbf{g}}{t}=\lim_{t \to 0} \frac{\textbf{g} \circ F_t-\textbf{g}}{t}.
+\end{equation}
+\subsection{Koopman eigenfunctions and intrinsic coordinates}
+The Koopam Operator is linear but infinite-dimensional. Therefore, instead of capturing all the measurement functions on the Hilbert space, applied Koopman analysis tries to identify key measurement functions that evolve linearly with the flow. These are the eigenvectors of the Koopman operator, which enable globally linear representations of strongly non-linear dynamical systems. 
+\begin{definition}[\textbf{Koopman eigenfunction}]
+We can define the \textbf{Koopman eigenfunction} for both continuous and discrete-time dynamical system with respect to the Lie operator $\mathcal{L}$ and Koopman operator $\mathcal{K}_{t}$, respectively.
+\begin{enumerate}
+	\item \textbf{Discrete-time Koopman Eigenfunction}:
+	\begin{equation}
+		\varphi(\textbf{x}_{k+1}) = \mathcal{K}_{t} \varphi(\textbf{x}_k) = \lambda \varphi(\textbf{x}_k);
+	\end{equation}
+	\item \textbf{Continuous-time Koopman Eigenfunction}:
+	\begin{equation}
+		\frac{d}{dt}\varphi(\textbf{x}) = \mathcal{L} \varphi(\textbf{x}) = \lambda \varphi(\textbf{x}).
+	\end{equation}
+\end{enumerate}
+\end{definition}
+Applying the chain rule to the time derivative of $\varphi(x)$ in equation $(32)$, we get that
+\begin{equation}
+	\frac{d}{dt}\varphi(\textbf{x}) = \nabla \varphi(\textbf{x}) \cdot \dot{\textbf{x}} = \nabla \varphi(\textbf{x}) \cdot \textbf{f}(\textbf{x}),
+\end{equation}
+and by $(32)$, it follows that
+\begin{equation}
+	\nabla \varphi(\textbf{x}) \cdot \dot{\textbf{x}} = \lambda \varphi(\textbf{x}).
+\end{equation}
+Now, let's dive into some interesting properties of the Koopman eigenfunctions.  
+\begin{definition}
+A \textbf{monoid} is a set $M$ together with a binary operation $\cdot$ which satisfies
+\begin{enumerate}
+	\item \textbf{Associativity}: \begin{equation}
+		(a \cdot b) \cdot c = a \cdot (b \cdot c), \,\, \forall a,b,c \in M;
+	\end{equation}
+	\item \textbf{Identity}: \begin{equation}
+		\exists e_M \in M: e_M \circ a = a \circ e_M = a, \,\, \forall a \in M.
+	\end{equation}
+\end{enumerate}
+\end{definition}
+\noindent Our goal now is to identify a monoidal structure on the set of Koopman eigenfunctions. \\
+By definition of discrete-time Koopman eigenfunction,
+\begin{equation}
+	\begin{split}
+		\mathcal{K}_t(\varphi_1(\textbf{x}_k)\varphi_2(\textbf{x}_k)) & = \varphi_1(\textbf{x}_{k+1})\varphi_2(\textbf{x}_{k+1}) = \lambda_1 \varphi_1(\textbf{x}_k) \lambda_2 \varphi_2(\textbf{x}_k) \\ & = \lambda_1 \lambda_2 \varphi_1(\textbf{x}_k)  \varphi_2(\textbf{x}_k),
+	\end{split}
+\end{equation}
+and by definition of continuous-time Koopman eigenfunction,
+\begin{equation}
+	\begin{split}
+		\mathcal{L}(\varphi_1(\textbf{x})\varphi_2(\textbf{x})) & = \frac{d}{dt}(\varphi_1(\textbf{x})\varphi_2(\textbf{x})) = \frac{d}{dt}(\varphi_1(\textbf{x})) \varphi_2(\textbf{x})+\varphi_1(\textbf{x})\frac{d}{dt}(\varphi_2(\textbf{x})) \\ & = \lambda_1\varphi_1(\textbf{x})\varphi_2(\textbf{x})+\lambda_2\varphi_1(\textbf{x})\varphi_2(\textbf{x}) \\ & = (\lambda_1+\lambda_2)\varphi_1(\textbf{x})\varphi_2(\textbf{x}).
+	\end{split}
+\end{equation}
+Therefore, the set of Koopman eigenfunctions $\varphi = \{\varphi_i\}_{i \in I}$, for $I \subseteq \mathbb{N}$, together with pointwise multiplication defined a monoid. The importance of this argument lies on the fact that for some dynamical systems, there may be a finite set of generator Koopman eigenvectors, i.e., Koopman eigenvectors which serve as basis for all others. \\
+Applying the continuous-time limit definition $(30)$ of the Koopman operator to the Koopman eigenfunction $\varphi(\textbf{x})$, we get that
+\begin{equation}
+	\begin{split}
+		\mathcal{L}\varphi(\textbf{x}) & = \lim_{t \to 0} \frac{\mathcal{K}_t \varphi(\textbf{x}) - \varphi(\textbf{x})}{t} = \lim_{t \to 0} \frac{e^{\lambda t}\varphi(\textbf{x}) - \varphi(\textbf{x})}{t} = \varphi(\textbf{x}) \lim_{t \to 0} \frac{e^{\lambda t}-1}{t} \\ & = \varphi(\textbf{x})\lim_{t \to 0} \lambda e^{\lambda t} = \lambda \varphi(\textbf{x}).
+	\end{split}
+\end{equation}
+
+\subsection{Koopman Mode Decomposition and finite representations}
+The multiple measurement functions $\textbf{g}_i:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ can be arranged in a column vector
+\begin{equation}
+	\textbf{g}(\textbf{x}) = \begin{bmatrix}
+		\textbf{g}_1(\textbf{x}) \\
+		\textbf{g}_2(\textbf{x}) \\
+		\vdots \\
+		\textbf{g}_n(\textbf{x})
+	\end{bmatrix}
+\end{equation}
+Since the set of Koopman eigenfunctions $\{\varphi_j(\textbf{x})\}_{j \in \mathbb{N}}$ provides a basis for the Hilbert space, i.e., $\mathcal{L}^2(M) = \mathcal{L}in\{\varphi_j(\textbf{x})\}$, every individual measurement function can be expanded as 
+\begin{equation}
+	\textbf{g}_i(\textbf{x}) = \sum_{j=0}^{\infty} v_{ij} \varphi_j(\textbf{x})
+\end{equation}
+and it follows that
+\begin{equation}
+	\textbf{g}(\textbf{x}) = \sum_{j=0}^{\infty} v_j \varphi_j(\textbf{x}).
+\end{equation}
+Now, the question is how to find Koopman modes. This is easily answered when we are dealing with conservative dynamical systems. Let's first derive the theory.
+\begin{definition}[\textbf{Measure}]
+A \textbf{measure} $\mu$ on a measurable space $(X,\Sigma)$ is a map $\mu:\Sigma \to [-\infty,\infty]$ such that
+\begin{enumerate}
+	\item $\mu(\emptyset)=0$;
+	\item $\mu(A) \geq 0$, for every $A \in \Sigma$;
+	\item For all countable collections $\{A_n\}_{n \in \mathbb{N}}$ of pairwise disjoint sets in $\Sigma$,
+	\begin{equation}
+		\mu\bigg(\bigcup_{n=1}^{\infty} A_n\bigg) = \sum_{n=1}^{\infty} \mu(A_n).
+	\end{equation}
+\end{enumerate}
+\end{definition}
+A measure is $\sigma$-finite if $X$ can be written as a countable union of measurable sets with finite measure.
+\begin{definition}[\textbf{$\sigma$-finite measure}]
+A measure $\mu: \Sigma \to [-\infty,\infty]$ is \textbf{$\sigma$-finite} if
+\begin{equation}
+	X=\bigcup_{n=1}^{\infty} A_n \,\, \text{and} \,\, \mu(A_n) < \infty, \,\, \forall n \in \mathbb{N}.
+\end{equation}
+\end{definition}
+\begin{definition}[\textbf{Measurable map}]
+A \textbf{measurable map} is a map $\tau: (X,\Sigma_X) \to (Y, \Sigma_Y)$ such that 
+\begin{equation}
+	\tau^{-1}(A) \in \Sigma_X, \forall A \in \Sigma_Y.
+\end{equation}
+\end{definition}
+\begin{definition}[\textbf{Measurable dynamical system}]
+A \textbf{measurable dynamical system} is a quadruple $(X,\Sigma,\mu,\tau)$ such that $(X,\Sigma)$ is a Borel space equipped with a sigma-finite measure $\mu$ and a map $\tau$.
+\end{definition}
+The map defines a single timestep transformation in the evolution of a dynamical system and we look into measurable maps so that the current state of a dynamical system comes from a well-defined past state.
+\begin{definition}[\textbf{Non-singular measurable map}]
+A measurable map $\tau:X \to X$ is said to be \textbf{non-singular} if 
+\begin{equation}
+	\mu(\tau^{-1}(A))=0 \iff \mu(A)=0, \forall A \in \Sigma.
+\end{equation}
+\end{definition}
+The condition of being non-singular is essenial for a dynamical system to be suitable for modelling.
+\begin{definition}[\textbf{Measure-preserving map}]
+A \textbf{measure-preserving map} $\tau:X \to X$ is such that
+\begin{equation}
+	\mu(\tau^{-1}(A))=\mu(A), \forall A \in \Sigma.
+\end{equation}
+\end{definition}
+A special type of measure-preserving map is a conservative map.
+\begin{definition}
+A \textbf{conservative map} is a map $\tau:X \to X$ for which
+\begin{equation}
+	\mu(A) > 0 \,\, \text{and} \,\, \forall n \in \mathbb{N}, \exists p > n: \mu(A \cap \tau^{-p}(A)) > 0.
+\end{equation}
+\end{definition}
+This means that a conservative dynamical system is one for which its current state revisits or comes arbitrarily close to a prior state. \\
+For conservative dynamical systems, the Koopman operator is unitary.
+\begin{definition}[Unitary operator]
+A unitary operator is an operator $\mathcal{L}$ such that is satisfies
+\begin{enumerate}
+	\item \textbf{Boundedness}: $||\mathcal{L}||<\infty$;
+	\item \textbf{Linearity}: $\mathcal{L}(f+g)=\mathcal{L}(f)+\mathcal{L}(g)$;
+	\item \textbf{Unitary normality}: $U^*U=UU^*=I$.
+\end{enumerate}
+\end{definition}
+It follows that the Koopman eigenfunctions are orthonormal and therefore, we can compute the Koopman modes by simply taking the projection of the Koopman Eigenfunctions onto the given measurement functions, i.e., each Koopman mode $v_j$, $j \in \mathbb{N}$ is given by
+\begin{equation}
+	v_j = \begin{bmatrix}
+		\langle \phi_j, \textbf{g}_1 \rangle \\
+		\langle \phi_j, \textbf{g}_2 \rangle \\
+		\vdots \\
+		\langle \phi_j, \textbf{g}_p \rangle
+	\end{bmatrix}.
+\end{equation}
+We can now obtain another expression for the measurement function $\textbf{g}$ as follows
+\begin{equation}
+	\begin{split}
+		\textbf{g}(\textbf{x}_k) & = \mathcal{K}_t \textbf{g}(\textbf{x}_{k-1}) = \cdots = \mathcal{K}_t^k\textbf{g}(\textbf{x}_0) = \mathcal{K}_t^k \sum_{j=0}^{\infty} v_j \varphi_j (\textbf{x}_0) \\ & =
+		\sum_{j=0}^{\infty} v_j \mathcal{K}_t^k \varphi(\textbf{x}_0) = \sum_{j=0}^{\infty} v_j \lambda_j^k \varphi_j(\textbf{x}_0).
+	\end{split}
+\end{equation}
+\begin{definition}[\textbf{Koopman Mode Decomposition}]
+The \textbf{Koopman Mode Decomposition} of the dynamical system $\phi(t,x)$ with set of Koopman eigenfunctions $\{\varphi_j(\textbf{x})\}_{j \in \mathbb{N}}$ is given by the sequence of triples
+\begin{equation}
+	\{(\lambda_j, v_j, \varphi_j)\}_{j=0}^{\infty}.
+\end{equation}
+\end{definition}
+\subsection{Important eigenspaces and finite-dimensional models}
+The biggest challenge in modelling dynamical systems using the Koopman operator is the fact that the operator is infinite-dimensional. So, the idea is to find a finite-dimensional representation of the Koopman operator, which better approximates the dynamics. This can be done by finding finite-dimensional invariant subspaces.
+\begin{definition}[\textbf{Koopman invariant subspace}] 
+A \textbf{Koopman invariant subspace} is defined as the span of measurement functions $\{g_1,g_2,\dots,g_p\}$ if all the functions in the subspace 
+\begin{equation}
+	g = \alpha_1g_1+\alpha_2g_2+\dots+\alpha_pg_p = \sum_{i=1}^p \alpha_i g_i
+\end{equation}
+remain in this subspace after being acted by the Koopman operator $\mathcal{K}$.
+\end{definition}
+It is obvious that every finite set of eigenfunctions of the Koopman operator will span an invariant subspace and therefore, finding these eigenfunction coordinates is a central challenge in modelling since these provide instrinsic coordinates in which the dynamics behave linearly.
+\end{document}
