@@ -56,7 +56,7 @@ In general, if $\phi(t,x)$ is a dynamical system on $M \subseteq \mathbb{R}^n$, 
 defines a $\mathcal{C}^1$-\textbf{vector field} on $M$ and for each $x_0 \in M$, $\phi(t,x_0)$ is the solution of the initial value problem
 \begin{equation}
 	\begin{split}
-		\frac{d}{dt} x(t) & = f(x) \\
+		\frac{d}{dt} x(t) & = f(x(t)) \\
 		x(0) & = x_0.
 	\end{split}
 \end{equation}
@@ -161,7 +161,7 @@ The operator $T^{-1}$ induces a transformation $\textbf{z}=T^{-1}\textbf{x}$ int
 \section{Koopman Operator Theory}
 Koopman Operator Theory is an approach for the data-driven study of dynamical systems in terms of measurements $\textbf{g}(\textbf{x})$ obtained from it. \\
 In $1931$, Koopman showed that it is possible to represent a non-linear dynamical system in terms of a linear but infinite-dimensional operator acting on a Hilbert space of state measurements. This operator is obviously called the \textbf{Koopman Operator}. \\
-Before trying to understand Koopamn Operator theory, let's study some important concepts.
+Before trying to understand Koopman Operator theory, let's study some important concepts.
 \begin{definition}[\textbf{Linear operator}]
 A \textbf{linear operator} is a mapping $\alpha:M \to \mathbb{R}$ which satisfies
 \begin{equation}
@@ -208,11 +208,11 @@ A Hilbert space $H$ is complete in the sense that every Cauchy sequence in $H$ i
 \subsection{Mathematical formulation of Koopman Theory}
 Since Koopman Operator Theory is a data-driven method, we should start by defining the data and how we will use it.
 \begin{definition}[\textbf{Observable}]
-An \textbf{observable} is a measurement function $\textbf{g}:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ of an infinite-dimensional Hilbert space. The space of measurement functions is denoted by $\mathcal{G}(M)$.
+An \textbf{observable} is a measurement function $\textbf{g}:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ of an infinite-dimensional Hilbert space. The space of measurement functions is denoted by $\mathcal{G}(M)$ or $\mathcal{C}(M)$ since these are continuous functions.
 \end{definition}
 The Koopman Operator evolves the measurements of a dynamical system by means of the associated flow map.
 \begin{definition}[\textbf{Koopman Operator}]
-The \textbf{Koopman Operator} is an infinite-dimensional linear operator, denoted $\mathcal{K}_t$, that acts on observables in the following way
+The \textbf{Koopman Operator} is an infinite-dimensional linear operator $\mathcal{K}_t: \mathcal{C}(M) \to \mathcal{C}(M)$ that acts on observables in the following way
 \begin{equation}
 	\mathcal{K}_t \textbf{g}(\textbf{x}) = \textbf{g} \circ F_t (\textbf{x}).
 \end{equation}
@@ -228,7 +228,7 @@ The continuous analogue of
 \end{equation}
 is given by the Lie operator $\mathcal{L}$, for which it holds
 \begin{equation}
-	\frac{d}{dt} \textbf{g} = \mathcal{L} \textbf{g} \,\, \text{$\color{red} \bigg(\sim \frac{d}{dt} \textbf{x}(t) = \textbf{f}(\textbf{x}(t)\bigg)$}.
+	\frac{d}{dt} \textbf{g} = \mathcal{L} \textbf{g} \,\, \text{$\color{red} \bigg(\sim \frac{d}{dt} \textbf{x}(t) = \textbf{f}(\textbf{x}(t))\bigg)$}.
 \end{equation}
 Therefore, $\mathcal{L}$ is the infinitesimal generator of the one-parameter family of transformations $\mathcal{K}_t$. By definition of derivative, $\mathcal{L}$ is therefore given as
 \begin{equation}
@@ -241,8 +241,17 @@ We can define the \textbf{Koopman eigenfunction} for both continuous and discret
 \begin{enumerate}
 	\item \textbf{Discrete-time Koopman Eigenfunction}:
 	\begin{equation}
-		\varphi(\textbf{x}_{k+1}) = \mathcal{K}_{t} \varphi(\textbf{x}_k) = \lambda \varphi(\textbf{x}_k);
+		\varphi(\textbf{x}_{k+1}) = \mathcal{K}_{t} \varphi(\textbf{x}_k) = e^{\lambda t} \varphi(\textbf{x}_k);
 	\end{equation}
+	This is equivalent to
+		\begin{equation}
+			\varphi(F_t(\textbf{x}_k)) = e^{\lambda t} 	\varphi(\textbf{x}_k).
+		\end{equation}
+	Therefore, any such eigenfunction defines a coordinate evolving linearly along the flow of $(4)$ and satisfying the linear ODE
+	\begin{equation}
+		\frac{d}{dt}\varphi(F_t(\textbf{x}_k)) = \lambda \varphi(F_t(\textbf{x}_k)).
+	\end{equation}
+	Furthermore, we can create an analogous concept for a continuous-time dynamical system.
 	\item \textbf{Continuous-time Koopman Eigenfunction}:
 	\begin{equation}
 		\frac{d}{dt}\varphi(\textbf{x}) = \mathcal{L} \varphi(\textbf{x}) = \lambda \varphi(\textbf{x}).
@@ -253,7 +262,7 @@ Applying the chain rule to the time derivative of $\varphi(x)$ in equation $(32)
 \begin{equation}
 	\frac{d}{dt}\varphi(\textbf{x}) = \nabla \varphi(\textbf{x}) \cdot \dot{\textbf{x}} = \nabla \varphi(\textbf{x}) \cdot \textbf{f}(\textbf{x}),
 \end{equation}
-and by $(32)$, it follows that
+and by $(34)$, it follows that
 \begin{equation}
 	\nabla \varphi(\textbf{x}) \cdot \dot{\textbf{x}} = \lambda \varphi(\textbf{x}).
 \end{equation}
@@ -340,14 +349,14 @@ The map defines a single timestep transformation in the evolution of a dynamical
 \begin{definition}[\textbf{Non-singular measurable map}]
 A measurable map $\tau:X \to X$ is said to be \textbf{non-singular} if 
 \begin{equation}
-	\mu(\tau^{-1}(A))=0 \iff \mu(A)=0, \forall A \in \Sigma.
+	\mu(\tau^{-1}(A))=0 \iff \mu(A)=0, \,\, \forall A \in \Sigma.
 \end{equation}
 \end{definition}
 The condition of being non-singular is essenial for a dynamical system to be suitable for modelling.
 \begin{definition}[\textbf{Measure-preserving map}]
 A \textbf{measure-preserving map} $\tau:X \to X$ is such that
 \begin{equation}
-	\mu(\tau^{-1}(A))=\mu(A), \forall A \in \Sigma.
+	\mu(\tau^{-1}(A))=\mu(A), \,\, \forall A \in \Sigma.
 \end{equation}
 \end{definition}
 A special type of measure-preserving map is a conservative map.
@@ -399,4 +408,41 @@ A \textbf{Koopman invariant subspace} is defined as the span of measurement func
 remain in this subspace after being acted by the Koopman operator $\mathcal{K}$.
 \end{definition}
 It is obvious that every finite set of eigenfunctions of the Koopman operator will span an invariant subspace and therefore, finding these eigenfunction coordinates is a central challenge in modelling since these provide instrinsic coordinates in which the dynamics behave linearly.
+
+\section{Non-recurrent sets and eigenfunctions}
+\begin{definition}[\textbf{Non-recurrent set}]
+A \textbf{non-recurrent} set $\Gamma \in M$ is one for which
+\begin{equation}
+	\textbf{x} \in \Gamma \implies F_t(\textbf{x}) \notin \Gamma, \,\, \forall t \in (0,T].
+\end{equation}
+\end{definition}
+This basically means that the points lying on a non-recurrent set, when acted by the flow map, do not remain in the non-recurrent set. \\
+We can define eigenfunctions $\{\varphi_{\lambda, \textbf{g}}\}$ on the entire image $X_T$ of a non-recurrent set $\Gamma$ by equating
+\begin{equation}
+	\varphi_{\lambda, \textbf{g}} (F_t(\textbf{x}_0)) = e^{\lambda t}\textbf{g}(\textbf{x}_0).
+\end{equation}
+\begin{definition}[\textbf{Image of a non-recurrent set}]
+The \textbf{image $X_T$ of a non-recurrent set} $\Gamma$ is defined by
+\begin{equation}
+	X_T = \bigcup_{t \in [0,t]} F_t(\Gamma) = \bigcup_{t \in [0,t]} \{F_t(\textbf{x}_0): \textbf{x}_0 \in \Gamma\}.
+\end{equation}
+\end{definition}
+In order to find a solution for the eigenfunction, we need to define the notion of a stopping time.
+\begin{definition}[\textbf{Hitting time}]
+The \textbf{hitting time} of \textbf{x} in $\Gamma$ is given by
+\begin{equation}
+	\tau(\textbf{x}) = \inf_{t \in \mathbb{R}} \{t:F_t(\textbf{x}). \in \Gamma\}
+\end{equation}
+\end{definition}
+We can therefore obtain an explicit expression for $\varphi_{\lambda, \textbf{g}}$ by flowing back until the hitting time of $\textbf{x}$ in $\Gamma$, i.e.,
+\begin{equation}
+	\varphi_{\lambda, \textbf{g}}(\textbf{x}) = e^{-\lambda \tau(\textbf{x})} \textbf{g}(F_{\tau(\textbf{x})}(\textbf{x})).
+\end{equation}
+\begin{theorem}
+Let $\Gamma$ be a non-recurrent set, $g \in \mathcal{C}(M)$ and $\lambda \in \mathbb{C}$. Then $\varphi_{\lambda, \textbf{g}}$ defined by $(59)$ is a Koopman eigenfunction on $X_T$. It also satisfies the conditions $(33)$ and $(34)$ and if $g$ is Lipschitz Continuous, it follows that 
+\begin{equation}
+	\nabla \varphi_{\lambda, \textbf{g}} \cdot f = \lambda \varphi_{\lambda, \textbf{g}}, \,\, \text{a.e.-$X$}.
+\end{equation}
+\end{theorem}
+\subsection{Span of eigenfunctions}
 \end{document}
