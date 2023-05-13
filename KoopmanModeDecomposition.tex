@@ -208,7 +208,7 @@ A Hilbert space $H$ is complete in the sense that every Cauchy sequence in $H$ i
 \subsection{Mathematical formulation of Koopman Theory}
 Since Koopman Operator Theory is a data-driven method, we should start by defining the data and how we will use it.
 \begin{definition}[\textbf{Observable}]
-An \textbf{observable} is a measurement function $\textbf{g}:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ of an infinite-dimensional Hilbert space. The space of measurement functions is denoted by $\mathcal{G}(M)$ or $\mathcal{C}(M)$ since these are continuous functions.
+An \textbf{observable} is a measurement function $\textbf{g}:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ of an infinite-dimensional Hilbert space. The space of measurement functions is denoted by $\mathcal{G}(M) \subseteq \mathcal{C}(M)$.
 \end{definition}
 The Koopman Operator evolves the measurements of a dynamical system by means of the associated flow map.
 \begin{definition}[\textbf{Koopman Operator}]
@@ -445,4 +445,22 @@ Let $\Gamma$ be a non-recurrent set, $g \in \mathcal{C}(M)$ and $\lambda \in \ma
 \end{equation}
 \end{theorem}
 \subsection{Span of eigenfunctions}
+In this subsection, we show that it is possible to approximate any continuous function $\textbf{h} \in \mathcal{C}(X_T)$ with a linear combination of Koopman eigenfunctions $\varphi_i$, for $i=1,\dots,N$.
+\begin{definition}[\textbf{Lattice of Koopman eigenvalues}]
+The \textbf{lattice of Koopman eigenvalues}, denoted $L(\Lambda)$, is defined by
+\begin{equation}
+	L(\Lambda) = \bigg\{\sum_{i=1}^p \alpha_k \lambda_k: \lambda_k \in \Lambda, \alpha_k \in \mathbb{N}, p \in \mathbb{N}\bigg\}.
+\end{equation}
+\end{definition}
+Since $L(\Lambda)$ is the set of all linear combinations of eigenvalues $\lambda_k \in \Lambda$, it follows trivially that if $\Lambda$ is a set of eigenvalues, then so is $L(\Lambda)$. We can then define the set of all eigenfunctions arising from linear combinations of measurement functions $\textbf{g} \in \mathcal{G}(M)$ and eigenvalues in $\Lambda$ as
+\begin{equation}
+	\varphi_{\Lambda, \mathcal{G}(M)} = \{\varphi_{\lambda, \textbf{g}}: \lambda \in \Lambda, \textbf{g} \in \mathcal{G}(M)\}.
+\end{equation}
+We now describe a way of approximating any continuous function $\textbf{h} \in \mathcal{C}(M)$ given a linear combination of Koopman eigenfunctions.
+\begin{theorem}
+Let $\Gamma$ be a non-recurrent set, closed in the standard topology of $\mathbb{R}^n$ (euclidean topology) and let $\Lambda_0 \subseteq \mathbb{C}$ be an arbitrary set of complex numbers such that at least one has a non-zero real part and $\Lambda_0=\bar{\Lambda}_0$. Set $\Lambda = L(\Lambda_0)$ and $G=\{g_i\}_{i=1^{\infty}}$ be an arbitrary set of functions whose span is dense in $\mathcal{C}(\Lambda)$ in the supremum norm. Then, the span of $\varphi_{\Lambda, G}$ is dense in $\mathcal{C}(X_T)$, i.e., for every $h \in \mathcal{C}(X_T)$ and any $\epsilon > 0$ there exists $\varphi_1,\dots,\varphi_N \in \varphi_{\Lambda,G}$ and $c_1,\dots,c_N$ such that
+\begin{equation}
+	\sup_{\textbf{x} \in X_T} \bigg|\textbf{h}(\textbf{x})-\sum_{i=1}^N c_i \varphi_i(\textbf{x})\bigg| < \epsilon.
+\end{equation}
+\end{theorem}
 \end{document}
