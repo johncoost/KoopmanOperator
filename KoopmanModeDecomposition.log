@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.12.28)  13 MAY 2023 19:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.12.28)  14 MAY 2023 10:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -311,7 +311,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {C:/Users/Utilizador/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 [2] [3]
-Overfull \hbox (10.31395pt too wide) in paragraph at lines 194--195
+Overfull \hbox (10.31395pt too wide) in paragraph at lines 195--196
 []\OT1/cmr/bx/n/10 Definition 10 \OT1/cmr/m/n/10 (\OT1/cmr/bx/n/10 Cauchy se-qu
 ence\OT1/cmr/m/n/10 )\OT1/cmr/bx/n/10 . []\OT1/cmr/m/it/10 A \OT1/cmr/bx/it/10 
 Cauchy se-quence \OT1/cmr/m/it/10 is a se-quence $\OMS/cmsy/m/n/10 f\OML/cmm/m/
@@ -319,54 +319,62 @@ it/10 x[]\OMS/cmsy/m/n/10 g[]$
  []
 
 [4]
-Overfull \hbox (8.3976pt too wide) in paragraph at lines 215--216
+Overfull \hbox (8.3976pt too wide) in paragraph at lines 216--217
 []\OT1/cmr/bx/n/10 Definition 13 \OT1/cmr/m/n/10 (\OT1/cmr/bx/n/10 Koopman Op-e
 r-a-tor\OT1/cmr/m/n/10 )\OT1/cmr/bx/n/10 . []\OT1/cmr/m/it/10 The \OT1/cmr/bx/i
 t/10 Koop-man Op-er-a-tor \OT1/cmr/m/it/10 is an infinite-
  []
 
 [5] [6] [7]
-Overfull \hbox (10.84962pt too wide) in paragraph at lines 340--341
+Overfull \hbox (10.84962pt too wide) in paragraph at lines 341--342
 []\OT1/cmr/bx/n/10 Definition 18 \OT1/cmr/m/n/10 (\OT1/cmr/bx/n/10 Measurable m
 ap\OT1/cmr/m/n/10 )\OT1/cmr/bx/n/10 . []\OT1/cmr/m/it/10 A \OT1/cmr/bx/it/10 me
 a-sur-able map \OT1/cmr/m/it/10 is a map $\OML/cmm/m/it/10 ^^\ \OT1/cmr/m/n/10 
 : (\OML/cmm/m/it/10 X; \OT1/cmr/m/n/10 ^^F[]) \OMS/cmsy/m/n/10 !
  []
 
-[8] [9] [10] [11] (KoopmanModeDecomposition.aux) ) 
+[8] [9] [10]
+Overfull \hbox (13.28116pt too wide) in paragraph at lines 471--472
+[]\OT1/cmr/bx/n/10 Definition 30 \OT1/cmr/m/n/10 (\OT1/cmr/bx/n/10 Jordan block
+s\OT1/cmr/m/n/10 )\OT1/cmr/bx/n/10 . []\OT1/cmr/m/it/10 A \OT1/cmr/bx/it/10 Jor
+-dan block \OT1/cmr/m/it/10 is a ma-trix $\OML/cmm/m/it/10 J[] \OMS/cmsy/m/n/10
+ 2 \OML/cmm/m/it/10 M[]\OT1/cmr/m/n/10 (\U/msb/m/n/10 R\OT1/cmr/m/n/10 )$
+ []
+
+[11] [12] (KoopmanModeDecomposition.aux) ) 
 Here is how much of TeX's memory you used:
  4392 strings out of 475385
  68082 string characters out of 2774546
- 419965 words of memory out of 3000000
+ 421965 words of memory out of 3000000
  25723 multiletter control sequences out of 15000+600000
  479862 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,19n,62p,722b,327s stack positions out of 10000i,1000n,20000p,200000b,80000s
-<C:/Users/Utilizador/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Utili
-zador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
-C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
-m/cmbx7.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmbxti10.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Utilizador/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Utilizador/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/
-Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.p
-fb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/
-public/amsfonts/cm/cmr17.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Utilizador/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Utilizador/AppDa
-ta/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Ut
-ilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb
-><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
-/cm/cmsy7.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmti10.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/Utilizador/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on KoopmanModeDecomposition.pdf (11 pages, 269582 bytes).
+ 55i,19n,62p,722b,312s stack positions out of 10000i,1000n,20000p,200000b,80000s
+<C:/Users/Utilizador/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Utilizador/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users
+/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx7.
+pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmbxti10.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmex10.pfb><C:/Users/Utilizador/AppData/Local/Programs/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Utilizador/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Utilizad
+or/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/U
+sers/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
+r10.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
+msfonts/cm/cmr17.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmr5.pfb><C:/Users/Utilizador/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Utilizador/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Utilizador
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Use
+rs/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy
+7.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
+fonts/cm/cmti10.pfb><C:/Users/Utilizador/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/symbols/msbm10.pfb><C:/Users/Utilizador/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
+Output written on KoopmanModeDecomposition.pdf (12 pages, 278792 bytes).
 PDF statistics:
- 128 PDF objects out of 1000 (max. 8388607)
+ 131 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

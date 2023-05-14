@@ -136,6 +136,7 @@ The \textbf{characteristic polynomial} of a matrix $A \in M^{n \times n}(\mathbb
 \begin{equation}
 	p_A(\lambda)=\det(A-\lambda I).
 \end{equation}
+The \textbf{characteristic equation} is $p_A(\lambda)=0$.
 \end{definition}
 \begin{theorem}
 $\lambda$ is an eigenvalue of $A$ $\iff$ $p_A(\lambda)=\det(A-\lambda I)=0$.
@@ -463,4 +464,84 @@ Let $\Gamma$ be a non-recurrent set, closed in the standard topology of $\mathbb
 	\sup_{\textbf{x} \in X_T} \bigg|\textbf{h}(\textbf{x})-\sum_{i=1}^N c_i \varphi_i(\textbf{x})\bigg| < \epsilon.
 \end{equation}
 \end{theorem}
+
+\subsection{Generalized eigenfunctions}
+Generalized eigenfunctions give rise to Koopman invariant subspaces and therefore, we can use them for linear prediction of non-linear dynamical systems. Since every matrix can be written in Jordan canonical form, and therefore, given the isomorphism $M^{n \times n}(\mathbb{R}) \cong \mathcal{L}(\mathbb{R}^n, \mathbb{R}^n)$, we can represent a linear operator using a Jordan matrix.
+\begin{definition}[\textbf{Jordan blocks}]
+A \textbf{Jordan block} is a matrix $J_{\lambda_i,n_i} \in M^{n_i \times n_i}(\mathbb{R})$ specified by its eigenvalue $\lambda_i$, which is $0$ everywhere expect at the diagonal and superdiagonal, where it takes value $\lambda_i$ and $1$, respectively. It can be represented in the following way:
+\begin{equation}
+	    J_{\lambda_i,n_i} = \begin{bmatrix}
+		\lambda_i & 1 & 0 & \cdots & 0 \\
+		0 & \lambda_i & 1 & \cdots & 0 \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		0 & 0 & 0 & \lambda_i & 1 \\
+		0 & 0 & 0 & 0 & \lambda_i
+	\end{bmatrix}.
+\end{equation}
+\end{definition}
+\begin{definition}[\textbf{Jordan matrix}]
+A \textbf{Jordan matrix} is a block diagonal matrix over a ring $R$, whose blocks are \textbf{Jordan blocks}.
+\end{definition}
+Let $\lambda \in \mathbb{C}$ be an eigenvalue and $\textbf{g}_1,\dots,\textbf{g}_{n_\lambda} \in \mathcal{G}(M)$ be measurement functions. Consider the Jordan block
+\begin{equation}
+	J_{\lambda,n_{\lambda}} = \begin{bmatrix}
+		\lambda & 1 & 0 & \cdots & 0 \\
+		0 & \lambda & 1 & \cdots & 0 \\
+		\vdots & \vdots & \vdots & \ddots & \vdots \\
+		0 & 0 & 0 & \lambda & 1 \\
+		0 & 0 & 0 & 0 & \lambda
+	\end{bmatrix}
+\end{equation}
+and following equation $(56)$, define 
+\begin{equation}
+	\begin{bmatrix}
+		\psi_{\lambda,\textbf{g}_1}(F_t(\textbf{x}_0)) \\
+		\vdots \\
+		\psi_{\lambda,\textbf{g}_{n_{\lambda}}}(F_t(\textbf{x}_0))
+	\end{bmatrix} = e^{J_{\lambda}t}
+	\begin{bmatrix}
+		\textbf{g}_1(\textbf{x}_0) \\
+		\vdots \\
+		\textbf{g}_{n_{\lambda}}(\textbf{x}_0)
+	\end{bmatrix}.
+\end{equation}
+Following equation $(59)$, we can obtain explicit solutions for each $\psi_{\lambda,\textbf{g}_i}(\textbf{x})$ for $i=1,\dots,n_{\lambda}$,
+\begin{equation}
+	\begin{bmatrix}
+		\phi_{\lambda, \textbf{g}_1}(F_t(\textbf{x}_0)) \\
+		\vdots \\
+		\phi_{\lambda, \textbf{g}_{n_{\lambda}}}(F_t(\textbf{x}_0))
+	\end{bmatrix} = e^{-J_{\lambda} \tau(\textbf{x})}
+	\begin{bmatrix}
+		\textbf{g}_1(F_{\tau(\textbf{x})}(\textbf{x})) \\
+		\vdots \\
+		\textbf{g}_{n_{\lambda}}(F_{\tau(\textbf{x})}(\textbf{x}))
+	\end{bmatrix}
+\end{equation}
+for all $\textbf{x} \in X_T$. We can also write the set of generalized eigenfunctions a in a column vector as done in $(42)$,
+\begin{equation}
+	    \psi = \begin{bmatrix}
+		\psi_{\lambda, \textbf{g}_1} \\
+		\vdots \\
+		\psi_{\lambda, \textbf{g}_{n_{\lambda}}}
+	\end{bmatrix}.
+\end{equation}
+Then,
+\begin{theorem}
+Let $\Gamma$ be a non-recurrent set, $g_i \in \mathcal{C}(\Gamma)$, for $i=1,\dots,n_{\lambda}$, and $\lambda \in \mathbb{C}$. Then, the subspace 
+\begin{equation}
+	\mathcal{L}in\{\psi_{\lambda, \textbf{g}_1}, \dots, \psi_{\lambda, \textbf{g}_{n_{\lambda}}}\} \subseteq \mathcal{C}(X_T)
+\end{equation}
+is invariant under the action of the Koopman semigroup $\mathcal{K}_t$. Moreover,
+\begin{equation}
+	\psi(F_t(\textbf{x})) = e^{J_{\lambda}t}\psi(\textbf{x})
+\end{equation}
+and by $(32)$ and $(33)$, it follows that
+\begin{equation}
+	\frac{d}{dt}\psi(F_t(\textbf{x})) = J_{\lambda}\psi(F_t(\textbf{x}))
+\end{equation}
+for any $x \in X_T$ and $t \in [0,T]$ such that $S_{t'}(\textbf{x}) \in X_T$ for all $t' \in [0,t]$.
+\end{theorem}
+
+\section{Learning eigenfunctions from data}
 \end{document}
