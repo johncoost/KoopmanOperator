@@ -11,6 +11,7 @@
 \usepackage{xcolor}
 \newtheorem{axiom}{Axiom}
 \newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
 \newcommand{\innerproduct}[2]{\langle #1, #2 \rangle}
@@ -31,17 +32,17 @@ The main objective of building the field of Koopman Operator Theory is to obtain
 \section{Background on Dynamical Systems}
 \subsection{Dynamical Systems}
 \begin{definition}[\textbf{Dynamical system}]
-A \textbf{dynamical system} on a manifold $M$ is a $\mathcal{C}^1$-map 
+A \textbf{dynamical system} on a manifold $\mathcal{M}$ is a $\mathcal{C}^1$-map 
 \begin{equation}
-	\phi: \mathbb{R} \times M \to M
+	\phi: \mathbb{R} \times \mathcal{M} \to \mathcal{M}
 \end{equation}
-where $M \in \tau_{\mathbb{R}^n}$ and if $\phi_t(x)=\phi(t,x)$, then $\phi_t$ satisfies
+where $\mathcal{M} \in \tau_{\mathbb{R}^n}$ and if $\phi_t(x)=\phi(t,x)$, then $\phi_t$ satisfies
 \begin{enumerate}
 	\item $\phi_0(x)=x$ for all $x \in M$ and 
 	\item $\phi_t \circ \phi_s (x) = \phi_{t+s}(x)$ for all $s,t \in \mathbb{R}$ and $x \in M$.
 \end{enumerate}
 \end{definition}
-We can easily see that for each $t \in \mathbb{R}$, $\phi_t$ is a $\mathcal{C}^1$-map of $M$ into $M$ which has a $\mathcal{C}^1$-inverse given by $\phi_{-t}$. Therefore, $\phi = \{\phi_t\}_{t \in \mathbb{R}}$ is a one-parameter family of diffeomorphism on $M$ that form a commutative group under composition. \\
+We can easily see that for each $t \in \mathbb{R}$, $\phi_t$ is a $\mathcal{C}^1$-map of $\mathcal{M}$ into $\mathcal{M}$ which has a $\mathcal{C}^1$-inverse given by $\phi_{-t}$. Therefore, $\phi = \{\phi_t\}_{t \in \mathbb{R}}$ is a one-parameter family of diffeomorphism on $M$ that form a commutative group under composition. \\
 For example, if $A \in M^{n \times n}(\mathbb{R})$ then $\phi(t,x)=e^{At}x$ defines a dynamical system on $\mathbb{R}^n$ and for each $x_0 \in \mathbb{R}^n$, $\phi(t,x_0)$ is the solution of the initial value problem
 \begin{equation}
 	\begin{split}
@@ -49,11 +50,11 @@ For example, if $A \in M^{n \times n}(\mathbb{R})$ then $\phi(t,x)=e^{At}x$ defi
 		x(0) & = x_0.
 	\end{split}
 \end{equation}
-In general, if $\phi(t,x)$ is a dynamical system on $M \subseteq \mathbb{R}^n$, then
+In general, if $\phi(t,x)$ is a dynamical system on $\mathcal{M} \subseteq \mathbb{R}^n$, then
 \begin{equation}
 	f(x)=\frac{d}{dt}\phi(t,x)\bigg|_{t=0}
 \end{equation}
-defines a $\mathcal{C}^1$-\textbf{vector field} on $M$ and for each $x_0 \in M$, $\phi(t,x_0)$ is the solution of the initial value problem
+defines a $\mathcal{C}^1$-\textbf{vector field} on $\mathcal{M}$ and for each $x_0 \in \mathcal{M}$, $\phi(t,x_0)$ is the solution of the initial value problem
 \begin{equation}
 	\begin{split}
 		\frac{d}{dt} x(t) & = f(x(t)) \\
@@ -63,14 +64,14 @@ defines a $\mathcal{C}^1$-\textbf{vector field} on $M$ and for each $x_0 \in M$,
 \subsection{Dynamical systems via differential equations}
 As we've seen in section $1.1$, a dynamical system $\phi$ defines a vector field $\textbf{f}$ and $\phi(t,x_0)$ is the solution to a system of differential equation depending on $\textbf{f}$. Therefore, it makes sense to define dynamical systems in terms of the corresponding differential equations.
 \begin{definition}[\textbf{Continuous-time dynamical system}]
-A continuous-time dynamical system $\phi(t,x) : \mathbb{R} \times M \to M$ is the solution to a system of differential equations
+A continuous-time dynamical system $\phi(t,x) : \mathbb{R} \times \mathcal{M} \to \mathcal{M}$ is the solution to a system of differential equations
 \begin{equation}
 	\begin{split}
 		\frac{d}{dt}\textbf{x}\,(t) & = \textbf{f}\,(\textbf{x},t;\beta) \\
 		\textbf{x}(0) & = \textbf{x}_0,
 	\end{split}
 \end{equation}
-where $\textbf{x}$ is the state of the dynamical system, $\textbf{f}$ defines a vector field on $M$, $t$ is the time index and $\beta$ is a set of parameters.
+where $\textbf{x}$ is the state of the dynamical system, $\textbf{f}$ defines a vector field on $\mathcal{M}$, $t$ is the time index and $\beta$ is a set of parameters.
 \end{definition}
 It is possible to obtain the more general notion of a discrete-time dynamical system by discretizing the continuous time index set $\{t\}_{t \in \mathbb{R}}$ into a discrete time index set $\{k\Delta t\}_{k \in \mathbb{Z}}$, where $\Delta t$ is a fixed-length interval. \\
 Since by definition of derivative,
@@ -164,7 +165,7 @@ Koopman Operator Theory is an approach for the data-driven study of dynamical sy
 In $1931$, Koopman showed that it is possible to represent a non-linear dynamical system in terms of a linear but infinite-dimensional operator acting on a Hilbert space of state measurements. This operator is obviously called the \textbf{Koopman Operator}. \\
 Before trying to understand Koopman Operator theory, let's study some important concepts.
 \begin{definition}[\textbf{Linear operator}]
-A \textbf{linear operator} is a mapping $\alpha:M \to \mathbb{R}$ which satisfies
+A \textbf{linear operator} is a mapping $\alpha:X \to \mathbb{R}$ which satisfies
 \begin{equation}
 	\alpha(\lambda x + \mu y) = \lambda \alpha(x) + \mu \alpha(y).
 \end{equation}
@@ -209,7 +210,7 @@ A Hilbert space $H$ is complete in the sense that every Cauchy sequence in $H$ i
 \subsection{Mathematical formulation of Koopman Theory}
 Since Koopman Operator Theory is a data-driven method, we should start by defining the data and how we will use it.
 \begin{definition}[\textbf{Observable}]
-An \textbf{observable} is a measurement function $\textbf{g}:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ of an infinite-dimensional Hilbert space. The space of measurement functions is denoted by $\mathcal{G}(M) \subseteq \mathcal{C}(M)$.
+An \textbf{observable} is a measurement function $\textbf{g}:\mathcal{M} \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ of an infinite-dimensional Hilbert space. The space of measurement functions is denoted by $\mathcal{G}(\mathcal{M}) \subseteq \mathcal{C}(\mathcal{M})$.
 \end{definition}
 The Koopman Operator evolves the measurements of a dynamical system by means of the associated flow map.
 \begin{definition}[\textbf{Koopman Operator}]
@@ -301,7 +302,7 @@ Applying the continuous-time limit definition $(30)$ of the Koopman operator to 
 \end{equation}
 
 \subsection{Koopman Mode Decomposition and finite representations}
-The multiple measurement functions $\textbf{g}_i:M \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ can be arranged in a column vector
+The multiple measurement functions $\textbf{g}_i:\mathcal{M} \to \mathbb{F} \in \{\mathbb{R}, \mathbb{C}\}$ can be arranged in a column vector
 \begin{equation}
 	\textbf{g}(\textbf{x}) = \begin{bmatrix}
 		\textbf{g}_1(\textbf{x}) \\
@@ -310,7 +311,7 @@ The multiple measurement functions $\textbf{g}_i:M \to \mathbb{F} \in \{\mathbb{
 		\textbf{g}_n(\textbf{x})
 	\end{bmatrix}
 \end{equation}
-Since the set of Koopman eigenfunctions $\{\varphi_j(\textbf{x})\}_{j \in \mathbb{N}}$ provides a basis for the Hilbert space, i.e., $\mathcal{L}^2(M) = \mathcal{L}in\{\varphi_j(\textbf{x})\}$, every individual measurement function can be expanded as 
+Since the set of Koopman eigenfunctions $\{\varphi_j(\textbf{x})\}_{j \in \mathbb{N}}$ provides a basis for the Hilbert space, i.e., $\mathcal{L}^2(\mathcal{M}) = \mathcal{L}in\{\varphi_j(\textbf{x})\}$, every individual measurement function can be expanded as 
 \begin{equation}
 	\textbf{g}_i(\textbf{x}) = \sum_{j=0}^{\infty} v_{ij} \varphi_j(\textbf{x})
 \end{equation}
@@ -412,20 +413,20 @@ It is obvious that every finite set of eigenfunctions of the Koopman operator wi
 
 \section{Non-recurrent sets and eigenfunctions}
 \begin{definition}[\textbf{Non-recurrent set}]
-A \textbf{non-recurrent} set $\Gamma \in M$ is one for which
+A \textbf{non-recurrent} set $\Gamma \in \mathcal{M}$ is one for which
 \begin{equation}
 	\textbf{x} \in \Gamma \implies F_t(\textbf{x}) \notin \Gamma, \,\, \forall t \in (0,T].
 \end{equation}
 \end{definition}
 This basically means that the points lying on a non-recurrent set, when acted by the flow map, do not remain in the non-recurrent set. \\
-We can define eigenfunctions $\{\varphi_{\lambda, \textbf{g}}\}$ on the entire image $X_T$ of a non-recurrent set $\Gamma$ by equating
+We can define eigenfunctions $\{\varphi_{\lambda, \textbf{g}}\}$ on the entire image $\mathcal{M}_T$ of a non-recurrent set $\Gamma$ by equating
 \begin{equation}
 	\varphi_{\lambda, \textbf{g}} (F_t(\textbf{x}_0)) = e^{\lambda t}\textbf{g}(\textbf{x}_0).
 \end{equation}
 \begin{definition}[\textbf{Image of a non-recurrent set}]
-The \textbf{image $X_T$ of a non-recurrent set} $\Gamma$ is defined by
+The \textbf{image $\mathcal{M}_T$ of a non-recurrent set} $\Gamma$ is defined by
 \begin{equation}
-	X_T = \bigcup_{t \in [0,t]} F_t(\Gamma) = \bigcup_{t \in [0,t]} \{F_t(\textbf{x}_0): \textbf{x}_0 \in \Gamma\}.
+	\mathcal{M}_T = \bigcup_{t \in [0,t]} F_t(\Gamma) = \bigcup_{t \in [0,t]} \{F_t(\textbf{x}_0): \textbf{x}_0 \in \Gamma\}.
 \end{equation}
 \end{definition}
 In order to find a solution for the eigenfunction, we need to define the notion of a stopping time.
@@ -440,13 +441,13 @@ We can therefore obtain an explicit expression for $\varphi_{\lambda, \textbf{g}
 	\varphi_{\lambda, \textbf{g}}(\textbf{x}) = e^{-\lambda \tau(\textbf{x})} \textbf{g}(F_{\tau(\textbf{x})}(\textbf{x})).
 \end{equation}
 \begin{theorem}
-Let $\Gamma$ be a non-recurrent set, $g \in \mathcal{C}(M)$ and $\lambda \in \mathbb{C}$. Then $\varphi_{\lambda, \textbf{g}}$ defined by $(59)$ is a Koopman eigenfunction on $X_T$. It also satisfies the conditions $(33)$ and $(34)$ and if $g$ is Lipschitz Continuous, it follows that 
+Let $\Gamma$ be a non-recurrent set, $g \in \mathcal{C}(\mathcal{M})$ and $\lambda \in \mathbb{C}$. Then $\varphi_{\lambda, \textbf{g}}$ defined by $(59)$ is a Koopman eigenfunction on $X_T$. It also satisfies the conditions $(33)$ and $(34)$ and if $g$ is Lipschitz Continuous, it follows that 
 \begin{equation}
 	\nabla \varphi_{\lambda, \textbf{g}} \cdot f = \lambda \varphi_{\lambda, \textbf{g}}, \,\, \text{a.e.-$X$}.
 \end{equation}
 \end{theorem}
 \subsection{Span of eigenfunctions}
-In this subsection, we show that it is possible to approximate any continuous function $\textbf{h} \in \mathcal{C}(X_T)$ with a linear combination of Koopman eigenfunctions $\varphi_i$, for $i=1,\dots,N$.
+In this subsection, we show that it is possible to approximate any continuous function $\textbf{h} \in \mathcal{C}(\mathcal{M}_T)$ with a linear combination of Koopman eigenfunctions $\varphi_i$, for $i=1,\dots,N$.
 \begin{definition}[\textbf{Lattice of Koopman eigenvalues}]
 The \textbf{lattice of Koopman eigenvalues}, denoted $L(\Lambda)$, is defined by
 \begin{equation}
@@ -455,11 +456,11 @@ The \textbf{lattice of Koopman eigenvalues}, denoted $L(\Lambda)$, is defined by
 \end{definition}
 Since $L(\Lambda)$ is the set of all linear combinations of eigenvalues $\lambda_k \in \Lambda$, it follows trivially that if $\Lambda$ is a set of eigenvalues, then so is $L(\Lambda)$. We can then define the set of all eigenfunctions arising from linear combinations of measurement functions $\textbf{g} \in \mathcal{G}(M)$ and eigenvalues in $\Lambda$ as
 \begin{equation}
-	\varphi_{\Lambda, \mathcal{G}(M)} = \{\varphi_{\lambda, \textbf{g}}: \lambda \in \Lambda, \textbf{g} \in \mathcal{G}(M)\}.
+	\varphi_{\Lambda, \mathcal{G}(M)} = \{\varphi_{\lambda, \textbf{g}}: \lambda \in \Lambda, \textbf{g} \in \mathcal{G}(\mathcal{M})\}.
 \end{equation}
-We now describe a way of approximating any continuous function $\textbf{h} \in \mathcal{C}(M)$ given a linear combination of Koopman eigenfunctions.
+We now describe a way of approximating any continuous function $\textbf{h} \in \mathcal{C}(\mathcal{M})$ given a linear combination of Koopman eigenfunctions.
 \begin{theorem}
-Let $\Gamma$ be a non-recurrent set, closed in the standard topology of $\mathbb{R}^n$ (euclidean topology) and let $\Lambda_0 \subseteq \mathbb{C}$ be an arbitrary set of complex numbers such that at least one has a non-zero real part and $\Lambda_0=\bar{\Lambda}_0$. Set $\Lambda = L(\Lambda_0)$ and $G=\{g_i\}_{i=1^{\infty}}$ be an arbitrary set of functions whose span is dense in $\mathcal{C}(\Lambda)$ in the supremum norm. Then, the span of $\varphi_{\Lambda, G}$ is dense in $\mathcal{C}(X_T)$, i.e., for every $h \in \mathcal{C}(X_T)$ and any $\epsilon > 0$ there exists $\varphi_1,\dots,\varphi_N \in \varphi_{\Lambda,G}$ and $c_1,\dots,c_N$ such that
+Let $\Gamma$ be a non-recurrent set, closed in the standard topology of $\mathbb{R}^n$ (euclidean topology) and let $\Lambda_0 \subseteq \mathbb{C}$ be an arbitrary set of complex numbers such that at least one has a non-zero real part and $\Lambda_0=\bar{\Lambda}_0$. Set $\Lambda = L(\Lambda_0)$ and $G=\{g_i\}_{i=1^{\infty}}$ be an arbitrary set of functions whose span is dense in $\mathcal{C}(\Lambda)$ in the supremum norm. Then, the span of $\varphi_{\Lambda, G}$ is dense in $\mathcal{C}(\mathcal{M}_T)$, i.e., for every $h \in \mathcal{C}(\mathcal{M}_T)$ and any $\epsilon > 0$ there exists $\varphi_1,\dots,\varphi_N \in \varphi_{\Lambda,G}$ and $c_1,\dots,c_N$ such that
 \begin{equation}
 	\sup_{\textbf{x} \in X_T} \bigg|\textbf{h}(\textbf{x})-\sum_{i=1}^N c_i \varphi_i(\textbf{x})\bigg| < \epsilon.
 \end{equation}
@@ -518,7 +519,7 @@ Following equation $(59)$, we can obtain explicit solutions for each $\psi_{\lam
 		\textbf{g}_{n_{\lambda}}(F_{\tau(\textbf{x})}(\textbf{x}))
 	\end{bmatrix}
 \end{equation}
-for all $\textbf{x} \in X_T$. We can also write the set of generalized eigenfunctions a in a column vector as done in $(42)$,
+for all $\textbf{x} \in \mathcal{M}_T$. We can also write the set of generalized eigenfunctions a in a column vector as done in $(42)$,
 \begin{equation}
 	    \psi = \begin{bmatrix}
 		\psi_{\lambda, \textbf{g}_1} \\
@@ -530,7 +531,7 @@ Then,
 \begin{theorem}
 Let $\Gamma$ be a non-recurrent set, $g_i \in \mathcal{C}(\Gamma)$, for $i=1,\dots,n_{\lambda}$, and $\lambda \in \mathbb{C}$. Then, the subspace 
 \begin{equation}
-	\mathcal{L}in\{\psi_{\lambda, \textbf{g}_1}, \dots, \psi_{\lambda, \textbf{g}_{n_{\lambda}}}\} \subseteq \mathcal{C}(X_T)
+	\mathcal{L}in\{\psi_{\lambda, \textbf{g}_1}, \dots, \psi_{\lambda, \textbf{g}_{n_{\lambda}}}\} \subseteq \mathcal{C}(\mathcal{M}_T)
 \end{equation}
 is invariant under the action of the Koopman semigroup $\mathcal{K}_t$. Moreover,
 \begin{equation}
@@ -544,4 +545,102 @@ for any $x \in X_T$ and $t \in [0,T]$ such that $S_{t'}(\textbf{x}) \in X_T$ for
 \end{theorem}
 
 \section{Learning eigenfunctions from data}
+Since we want to consider optimal eigenfunctions, we need to introduce $2$ important concepts which will be essential for the rest of the discussion.
+\begin{definition}[\textbf{Projection error}]
+	The \textbf{projection error} is given by
+	\begin{equation}
+		\min_{C \in M^{n \times N}(\mathbb{C})} ||\textbf{f}-C\varphi||.
+	\end{equation}
+\end{definition}
+\begin{definition}[\textbf{Prediction error}]
+The \textbf{prediction error} is given by
+\begin{equation}
+	||\textbf{f}(\textbf{x}(t))-\hat{\textbf{y}}(t)||.
+\end{equation}
+\end{definition}
+Let $\varphi_1,\dots,\varphi_N$ be Koopman eigenfunctions with associated eigenvalues $\lambda_1,\dots,\lambda_N$. The idea is, given a nonlinear dynamical system
+\begin{equation}
+	\dot{\textbf{x}}=\textbf{f}(\textbf{x})
+\end{equation}
+with state $\textbf{x} \in \mathcal{M} \subseteq \mathbb{R}^n$ and Lipschitz continuous function $\textbf{f}$  on $X$, to construct a linear predictor of the form
+\begin{equation}
+	\begin{split}
+		\dot{\textbf{z}} & = A\textbf{z} \\
+		\textbf{z}_0 & = \varphi(\textbf{x}_0) \\ 
+		\hat{\textbf{y}} & = C \textbf{z}
+	\end{split}
+\end{equation}
+such that the prediction of $\textbf{f}(\textbf{x}(t)) = \textbf{f}(F_t(\textbf{x}_0))$ is given by
+\begin{equation}
+	\textbf{f}(\textbf{x}(t)) \approx \hat{\textbf{y}}(t) = C e^{At} \textbf{z}_0 = C \begin{bmatrix}
+		e^{\lambda_1 t} & & \\
+		& \ddots & \\
+		& & e^{\lambda_N t}
+	\end{bmatrix} \textbf{z}_0
+\end{equation}
+and minimizes the projection error. \\
+Consider we are given a dataset $\mathcal{D}$ of the form
+\begin{equation}
+	\mathcal{D}=\bigg((\textbf{x}_k^j)_{j=0}^{M_s}\bigg)_{j=1}^{M_t} = \bigg((F_{kT_s}(\textbf{x}_0^j))_{j=0}^{M_s}\bigg)_{j=1}^{M_t}
+\end{equation}
+This means that $\mathcal{D}$ consists of $M_t$ distinct equidistantly sampled trajectories with $M_s+1$ samples each, where $M_s=T/T_s$ with $T_s$ being the sampling interval and $\textbf{x}_0^j$ is the initial condition of the $j$-th trajectory. The non-recurrent set $\Gamma$ is the set of initial conditions, i.e.,
+\begin{equation}
+	\Gamma = \{\textbf{x}_0^1,\dots,\textbf{x}_0^{M_t}\},
+\end{equation}
+the set of eigenvalues is given by
+\begin{equation}
+	\Lambda = (\lambda_1,\dots,\lambda_N)
+\end{equation}
+and the set of measurement functions $g:\mathcal{G}(\mathcal{M}) \to \mathcal{G}(\mathcal{M})$ is 
+\begin{equation}
+	G=(\textbf{g}_1,\dots,\textbf{g}_n).
+\end{equation}
+These functions define the values of the eigenfunction on the non-recurrent set $\Gamma$ and therefore, these are called \textbf{boundary functions}. \\ 
+We can construct a set of $N$ eigenfunctions by using the theory developed in Section $3$. Consider the matrix $\textbf{G}(i,j)=\textbf{g}_i(\textbf{x}_0^j)$ and a set of eigenfunctions
+\begin{equation}
+	\varphi_{\lambda_i,\textbf{g}_i}(\textbf{x}_0^j) := \textbf{g}(\textbf{x}_0^j), \,\, j=1,\dots,M_t.
+\end{equation}
+Then, equation $(56)$ defines the values of $\varphi_{\lambda_i,\textbf{g}_i}$ on $\mathcal{D}$, i.e.,
+\begin{equation}
+	\varphi_{\lambda_i,\textbf{g}_i}(\textbf{x}_k^j) = e^{\lambda_i k T_s}\textbf{G}(i,j), \,\, \forall k \in \{0,\dots,M_s\}, \,\, j \in \{1,\dots,M_t\}.
+\end{equation}
+In order to define the solution for the entire image set $\mathcal{M}_T$, we need to find a non-recurrent surface passing through a finite discrete non-recurrent set $\Gamma$. This is possible via the following lemma:
+\begin{lemma}
+Let $\Gamma=\{x^1.\dots,x^M\}$ be a discrete non-recurrent set on $\mathcal{M}$ and $\mathcal{M}'$ be a full-dimensional compact set containing $\Gamma$ on which the flow of $(74)$ can be rectified, i.e., there exists a diffeomorphism $\zeta:\mathcal{N}' \to \mathcal{M}'$ through which $(74)$ is conjugate to 
+\begin{equation}
+	\dot{\textbf{y}}=(0,0,\dots,0,1)
+\end{equation}
+with $\mathcal{N}' \subseteq \mathbb{R}^n$ convex. Assume that no two points in the non-recurrent set $\Gamma$ lie on the same trajectory of the non-linear dynamical system given by $(74)$. Then, there exists an $n-1$-dimensional surface $\hat{\Gamma}$ such that $\Gamma \subseteq \hat{\Gamma}$ closed in $\tau_{\mathbb{R}^n}$ and such that 
+\begin{equation}
+	\textbf{x} \in \hat{\Gamma} \implies F_t(\textbf{x}) \notin \hat{\Gamma}
+\end{equation}
+for any $t>0$ for which $F_{t'}(\textbf{x}) \in \mathcal{M}'$ for all $t' \in [0,t]$.
+\end{lemma}
+The non-recurrent surface is basically a line on which the non-recurrent set lies and even though we cannot define it, its existence implies that the eigenfunctions computed using equation $(82)$ on $\mathcal{D}$ are samples of continuous eigenfunction defined on
+\begin{equation}
+	\hat{\mathcal{M}}_T = \bigcup_{t \in [0,T]} F_t(\hat{\Gamma}).
+\end{equation}
+So, the eigenfunctions $\varphi_{\lambda_i, \textbf{g}_i}$ can be learned on $\hat{\mathcal{M}}_T$. We can do this in $2$ ways.
+\begin{enumerate}
+	\item \textbf{Interpolation}:
+	Given a set of basis functions
+	\begin{equation}
+		\beta = \begin{bmatrix}
+			\beta_1 \\
+			\vdots \\
+			\beta_{N_{\beta}}
+		\end{bmatrix}
+	\end{equation}
+	with $\beta_i \in \mathcal{C}(\mathcal{M})$, we solve the optimization problem
+	\begin{equation}
+		\begin{split}
+			\min_{c \in \mathbb{C}^{N_{\beta}}} & \delta_1 ||c||_1+||c||_2^2 \\
+			\text{subject to} \,\, &  c^T\beta(\textbf{x}_k^j) = \varphi_{\lambda_i,\textbf{g}_i}(\textbf{x}_k^j)
+		\end{split}
+	\end{equation}
+	\item \textbf{Approximation}:
+	\begin{equation}
+		\min_{c \in \mathbb{C}^{N_{\beta}}} \sum_{k=0}^{M_s} \sum_{j=1}^{M_t} |c^T\beta(\textbf{x}_k^j) - \varphi_{\lambda_i,\textbf{g}_i}(\textbf{x}_k^j)|^2 + \delta_1 ||c||_1+\delta_2||c||_2^2
+	\end{equation}
+\end{enumerate}
 \end{document}
